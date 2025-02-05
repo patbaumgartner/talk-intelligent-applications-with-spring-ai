@@ -19,9 +19,9 @@ import java.nio.charset.Charset;
 @SpringBootApplication
 public class OpenAiImageGeneratingApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiImageGeneratingApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiImageGeneratingApplication.class, args);
+	}
 
 }
 
@@ -30,31 +30,32 @@ public class OpenAiImageGeneratingApplication {
 @RequiredArgsConstructor
 class OpenAiImageGeneratingController {
 
-    private final ImageModel imageModel;
-    @Value("classpath:custom/custom.prompt")
-    private Resource prompt;
+	private final ImageModel imageModel;
 
-    @SneakyThrows
-    @GetMapping("/image")
-    public String imageGen() {
+	@Value("classpath:custom/custom.prompt")
+	private Resource prompt;
 
-        ImageOptions options = ImageOptionsBuilder.builder()
-                .withModel(OpenAiImageApi.ImageModel.DALL_E_3.getValue())
-                .withHeight(1024)
-                .withWidth(1024)
-                .build();
+	@SneakyThrows
+	@GetMapping("/image")
+	public String imageGen() {
 
-        String message = StreamUtils.copyToString(prompt.getInputStream(), Charset.defaultCharset());
+		ImageOptions options = ImageOptionsBuilder.builder()
+			.model(OpenAiImageApi.ImageModel.DALL_E_3.getValue())
+			.height(1024)
+			.width(1024)
+			.build();
 
-        ImagePrompt imagePrompt = new ImagePrompt(message, options);
+		String message = StreamUtils.copyToString(prompt.getInputStream(), Charset.defaultCharset());
 
-        log.info("Image generation just started");
-        ImageResponse response = imageModel.call(imagePrompt);
+		ImagePrompt imagePrompt = new ImagePrompt(message, options);
 
-        String imageUrl = response.getResult().getOutput().getUrl();
-        log.info("Image generation finished: {}", imageUrl);
+		log.info("Image generation just started");
+		ImageResponse response = imageModel.call(imagePrompt);
 
-        return "redirect:" + imageUrl;
-    }
+		String imageUrl = response.getResult().getOutput().getUrl();
+		log.info("Image generation finished: {}", imageUrl);
+
+		return "redirect:" + imageUrl;
+	}
 
 }

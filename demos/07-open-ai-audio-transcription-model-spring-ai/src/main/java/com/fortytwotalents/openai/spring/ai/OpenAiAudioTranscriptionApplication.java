@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class OpenAiAudioTranscriptionApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiAudioTranscriptionApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiAudioTranscriptionApplication.class, args);
+	}
 
 }
 
@@ -29,28 +29,29 @@ public class OpenAiAudioTranscriptionApplication {
 @RequiredArgsConstructor
 class OpenAiAudioTranscriptionController {
 
-    private final OpenAiAudioTranscriptionModel transcriptionModel;
+	private final OpenAiAudioTranscriptionModel transcriptionModel;
 
-    @SneakyThrows
-    @GetMapping(path = "/original", produces = "audio/mpeg")
-    byte[] original(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource resource) {
-        return resource.getInputStream().readAllBytes();
-    }
+	@SneakyThrows
+	@GetMapping(path = "/original", produces = "audio/mpeg")
+	byte[] original(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource resource) {
+		return resource.getInputStream().readAllBytes();
+	}
 
-    @GetMapping("/transcription")
-    String speech(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource audioFile) {
-        return transcriptionModel.call(new AudioTranscriptionPrompt(audioFile)).getResult().getOutput();
-    }
+	@GetMapping("/transcription")
+	String speech(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource audioFile) {
+		return transcriptionModel.call(new AudioTranscriptionPrompt(audioFile)).getResult().getOutput();
+	}
 
-    @GetMapping("/transcription/provider-options")
-    String speechProviderOptions(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource audioFile) {
-        var transcriptionResponse = transcriptionModel.call(new AudioTranscriptionPrompt(audioFile, OpenAiAudioTranscriptionOptions.builder()
-                .withLanguage("en")
-                .withPrompt("Transcribe the audio file about Philipp Maloney and the missing bag.")
-                .withTemperature(0f)
-                .withResponseFormat(OpenAiAudioApi.TranscriptResponseFormat.VTT)
-                .build()));
-        return transcriptionResponse.getResult().getOutput();
-    }
+	@GetMapping("/transcription/provider-options")
+	String speechProviderOptions(@Value("classpath:dieverschwundenetasche-smaller.mp3") Resource audioFile) {
+		var transcriptionResponse = transcriptionModel.call(new AudioTranscriptionPrompt(audioFile,
+				OpenAiAudioTranscriptionOptions.builder()
+					.language("en")
+					.prompt("Transcribe the audio file about Philipp Maloney and the missing bag.")
+					.temperature(0f)
+					.responseFormat(OpenAiAudioApi.TranscriptResponseFormat.VTT)
+					.build()));
+		return transcriptionResponse.getResult().getOutput();
+	}
 
 }

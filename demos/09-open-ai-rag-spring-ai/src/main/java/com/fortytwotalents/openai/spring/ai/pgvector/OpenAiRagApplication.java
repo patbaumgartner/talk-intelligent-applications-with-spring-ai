@@ -20,35 +20,35 @@ import java.util.List;
 @SpringBootApplication
 public class OpenAiRagApplication {
 
-    @Value("Artificial intelligence - Wikipedia.pdf")
-    private Resource pdf;
+	@Value("Artificial intelligence - Wikipedia.pdf")
+	private Resource pdf;
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiRagApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiRagApplication.class, args);
+	}
 
-    @Bean
-    CommandLineRunner commandLineRunner(ChatClient.Builder chatClientBuilder, VectorStore vectorStore) {
-        ChatClient chatClient = chatClientBuilder.build();
+	@Bean
+	CommandLineRunner commandLineRunner(ChatClient.Builder chatClientBuilder, VectorStore vectorStore) {
+		ChatClient chatClient = chatClientBuilder.build();
 
-        return args -> {
-            PagePdfDocumentReader reader = new PagePdfDocumentReader(pdf);
-            TokenTextSplitter splitter = new TokenTextSplitter();
-            List<Document> documents = splitter.apply(reader.get());
-            vectorStore.accept(documents);
+		return args -> {
+			PagePdfDocumentReader reader = new PagePdfDocumentReader(pdf);
+			TokenTextSplitter splitter = new TokenTextSplitter();
+			List<Document> documents = splitter.apply(reader.get());
+			vectorStore.accept(documents);
 
-            String answer = chatClient.prompt()
-                    .system("""
-                            You are a virtual assistant and answers questions with the data provided.
-                            If you are not sure or don't know, honestly say you don't know.
-                            """)
-                    .user("Why is the definition of AI difficult?")
-                    .advisors(new QuestionAnswerAdvisor(vectorStore))
-                    .call()
-                    .content();
+			String answer = chatClient.prompt()
+				.system("""
+						You are a virtual assistant and answers questions with the data provided.
+						If you are not sure or don't know, honestly say you don't know.
+						""")
+				.user("Why is the definition of AI difficult?")
+				.advisors(new QuestionAnswerAdvisor(vectorStore))
+				.call()
+				.content();
 
-            log.info("ChatGPT answered: {}", answer);
-        };
-    }
+			log.info("ChatGPT answered: {}", answer);
+		};
+	}
 
 }

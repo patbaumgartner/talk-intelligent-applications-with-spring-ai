@@ -13,29 +13,29 @@ import java.util.function.Function;
 @SpringBootApplication
 public class OpenAiFunctionCallingApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiFunctionCallingApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiFunctionCallingApplication.class, args);
+	}
 
-    @Bean
-    public Function<WeatherService.Request, WeatherService.Response> weatherFunction() {
-        return new WeatherService();
-    }
+	@Bean
+	public Function<WeatherService.Request, WeatherService.Response> weatherFunction() {
+		return new WeatherService();
+	}
 
-    @Bean
-    CommandLineRunner commandLineRunner(ChatClient.Builder chatClientBuilder) {
-        ChatClient chatClient = chatClientBuilder.build();
+	@Bean
+	CommandLineRunner commandLineRunner(ChatClient.Builder chatClientBuilder) {
+		ChatClient chatClient = chatClientBuilder.build();
 
-        return args -> {
+		return args -> {
 
-            String answer = chatClient.prompt()
-                    .user("What's the weather like in Munich, Zurich, and New York?")
-                    .functions("weatherFunction")
-                    .call()
-                    .content();
+			String answer = chatClient.prompt()
+				.user("What's the weather like in Stockholm, Zurich, and New York?")
+				.functions("weatherFunction")
+				.call()
+				.content();
 
-            log.info("ChatGPT answered: {}", answer);
-        };
-    }
+			log.info("ChatGPT answered: {}", answer);
+		};
+	}
 
 }
