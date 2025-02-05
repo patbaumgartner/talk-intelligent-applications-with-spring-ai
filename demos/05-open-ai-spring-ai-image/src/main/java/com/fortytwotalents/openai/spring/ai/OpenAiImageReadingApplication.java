@@ -14,28 +14,28 @@ import org.springframework.util.MimeTypeUtils;
 @SpringBootApplication
 public class OpenAiImageReadingApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiImageReadingApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiImageReadingApplication.class, args);
+	}
 
-    @Bean
-    ChatClient chatClient(ChatClient.Builder builder) {
-        return builder.build();
-    }
+	@Bean
+	ChatClient chatClient(ChatClient.Builder builder) {
+		return builder.build();
+	}
 
-    @Bean
-    CommandLineRunner commandLineRunner(ChatClient chatClient,
-                                        @Value("classpath:munich-weather.png") Resource imageResourceWeather) {
-        return args -> {
+	@Bean
+	CommandLineRunner commandLineRunner(ChatClient chatClient,
+			@Value("classpath:stockholm-weather.png") Resource imageResourceWeather) {
+		return args -> {
 
-            String answer = chatClient.prompt()
-                    .user(userSpec -> userSpec.text("What will be the weather like on Wednesday?")
-                            .media(MimeTypeUtils.IMAGE_PNG, imageResourceWeather))
-                    .call()
-                    .content();
+			String answer = chatClient.prompt()
+				.user(userSpec -> userSpec.text("What will be the weather like on Wednesday?")
+					.media(MimeTypeUtils.IMAGE_PNG, imageResourceWeather))
+				.call()
+				.content();
 
-            log.info("Answer: {}", answer);
-        };
-    }
+			log.info("Answer: {}", answer);
+		};
+	}
 
 }

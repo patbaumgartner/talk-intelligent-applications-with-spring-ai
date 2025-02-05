@@ -11,30 +11,30 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class OpenAiChatApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenAiChatApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OpenAiChatApplication.class, args);
+	}
 
-    @Bean
-    ChatClient chatClient(ChatClient.Builder builder) {
-        return builder.build();
-    }
+	@Bean
+	ChatClient chatClient(ChatClient.Builder builder) {
+		return builder.build();
+	}
 
-    @Bean
-    CommandLineRunner commandLineRunner(ChatClient chatClient) {
-        return args -> {
+	@Bean
+	CommandLineRunner commandLineRunner(ChatClient chatClient) {
+		return args -> {
 
-            Joke joke = chatClient.prompt()
-                    .system("You are a friendly chatbot and you like to place emojis everywhere.")
-                    .user("Tell me a developer joke about Python.")
-                    .call()
-                    .entity(Joke.class);
+			Joke joke = chatClient.prompt()
+				.system("You are a friendly chatbot and you like to place emojis everywhere.")
+				.user("Tell me a friendly developer joke about JAVA.")
+				.call()
+				.entity(Joke.class);
 
-            log.info("Joke - Prompt: {} - Punchline: {}", joke.prompt(), joke.punchline());
-        };
-    }
+			log.info("Joke - Prompt: {} - Punchline: {}", joke.prompt(), joke.punchline());
+		};
+	}
 
-    record Joke(String prompt, String punchline) {
-    }
+	record Joke(String prompt, String punchline) {
+	}
 
 }
