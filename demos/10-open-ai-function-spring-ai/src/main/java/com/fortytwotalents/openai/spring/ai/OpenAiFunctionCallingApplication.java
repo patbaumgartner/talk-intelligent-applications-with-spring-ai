@@ -29,8 +29,8 @@ public class OpenAiFunctionCallingApplication {
 		return args -> {
 
 			String answer = chatClient.prompt()
-				.user("What's the weather like in Stockholm, Zurich, and New York?")
-				.functions("weatherFunction")
+				.user("What's the weather like in Munich, Zurich, and New York?")
+				.tools("weatherFunction")
 				.call()
 				.content();
 

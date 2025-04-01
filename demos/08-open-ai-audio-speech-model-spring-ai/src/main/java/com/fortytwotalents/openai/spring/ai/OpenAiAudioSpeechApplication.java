@@ -53,7 +53,7 @@ class OpenAiAudioSpeechController {
 		var speechResponse = speechModel.call(new SpeechPrompt(resource.getContentAsString(Charset.defaultCharset()),
 				OpenAiAudioSpeechOptions.builder()
 					.model("tts-1")
-					.voice(OpenAiAudioApi.SpeechRequest.Voice.SHIMMER)
+					.voice(OpenAiAudioApi.SpeechRequest.Voice.ONYX)
 					.responseFormat(OpenAiAudioApi.SpeechRequest.AudioResponseFormat.MP3)
 					.speed(1.3f)
 					.build()));

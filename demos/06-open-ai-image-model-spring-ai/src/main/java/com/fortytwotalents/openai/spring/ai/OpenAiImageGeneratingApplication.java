@@ -35,6 +35,11 @@ class OpenAiImageGeneratingController {
 	@Value("classpath:custom/custom.prompt")
 	private Resource prompt;
 
+	@GetMapping("/")
+	public String index() {
+		return "redirect:/image";
+	}
+
 	@SneakyThrows
 	@GetMapping("/image")
 	public String imageGen() {

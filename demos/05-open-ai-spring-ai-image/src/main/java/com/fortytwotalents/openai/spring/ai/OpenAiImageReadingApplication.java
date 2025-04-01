@@ -25,7 +25,7 @@ public class OpenAiImageReadingApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(ChatClient chatClient,
-			@Value("classpath:stockholm-weather.png") Resource imageResourceWeather) {
+			@Value("classpath:nuerburgring.png") Resource imageResourceWeather) {
 		return args -> {
 
 			String answer = chatClient.prompt()
