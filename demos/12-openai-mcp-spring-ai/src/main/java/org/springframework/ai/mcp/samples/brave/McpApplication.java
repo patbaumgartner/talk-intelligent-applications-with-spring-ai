@@ -26,7 +26,7 @@ public class McpApplication {
 		return args -> {
 
 			var chatClient = chatClientBuilder
-				.defaultFunctions(mcpClient.listTools(null)
+				.defaultTools(mcpClient.listTools(null)
 					.tools()
 					.stream()
 					.map(tool -> new McpFunctionCallback(mcpClient, tool))
