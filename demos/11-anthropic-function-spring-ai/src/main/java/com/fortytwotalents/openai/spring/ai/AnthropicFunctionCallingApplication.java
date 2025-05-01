@@ -30,7 +30,7 @@ public class AnthropicFunctionCallingApplication {
 
 			String answer = chatClient.prompt()
 				.user("What's the weather like in Munich, Zurich, and New York?")
-				.tools("weatherFunction")
+				.toolNames("weatherFunction")
 				.call()
 				.content();
 
