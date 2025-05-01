@@ -1,16 +1,17 @@
 package org.springframework.ai.mcp.samples.brave;
 
+import io.modelcontextprotocol.client.McpClient;
+import io.modelcontextprotocol.client.McpSyncClient;
+import io.modelcontextprotocol.client.transport.ServerParameters;
+import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.mcp.client.McpClient;
-import org.springframework.ai.mcp.client.McpSyncClient;
-import org.springframework.ai.mcp.client.transport.ServerParameters;
-import org.springframework.ai.mcp.client.transport.StdioClientTransport;
-import org.springframework.ai.mcp.spring.McpFunctionCallback;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class McpApplication {
@@ -20,24 +21,19 @@ public class McpApplication {
 	}
 
 	@Bean
-	public CommandLineRunner predefinedQuestions(ChatClient.Builder chatClientBuilder, McpSyncClient mcpClient,
-			ConfigurableApplicationContext context) {
-
+	public CommandLineRunner predefinedQuestions(ChatClient.Builder chatClientBuilder,
+			List<McpSyncClient> mcpSyncClients) {
 		return args -> {
 
-			var chatClient = chatClientBuilder
-				.defaultTools(mcpClient.listTools(null)
-					.tools()
-					.stream()
-					.map(tool -> new McpFunctionCallback(mcpClient, tool))
-					.toArray(McpFunctionCallback[]::new))
+			var chatClient = chatClientBuilder.defaultSystem(
+					"You are useful assistant and can perform web searches Brave's search API to reply to your questions.")
+				.defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClients))
 				.build();
 
 			String question = "Does Spring AI supports the Model Context Protocol? Please provide some references.";
+
 			System.out.println("QUESTION: " + question);
 			System.out.println("ASSISTANT: " + chatClient.prompt(question).call().content());
-
-			context.close();
 		};
 	}
 
@@ -52,7 +48,9 @@ public class McpApplication {
 
 		var mcpClient = McpClient.sync(new StdioClientTransport(stdioParams)).build();
 		var init = mcpClient.initialize();
+
 		System.out.println("MCP Initialized: " + init);
+
 		return mcpClient;
 	}
 

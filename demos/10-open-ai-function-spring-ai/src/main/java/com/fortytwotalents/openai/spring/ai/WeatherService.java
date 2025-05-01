@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import org.springframework.ai.tool.annotation.Tool;
 
 import java.util.function.Function;
-
-import org.springframework.ai.tool.annotation.Tool;
 
 public class WeatherService implements Function<WeatherService.Request, WeatherService.Response> {
 
@@ -20,12 +19,15 @@ public class WeatherService implements Function<WeatherService.Request, WeatherS
 
 		if (request.location().contains("Munich")) {
 			temp = 6;
-		} else if (request.location().contains("Zurich")) {
+		}
+		else if (request.location().contains("Zurich")) {
 			temp = 10;
-		} else if (request.location().contains("New York")) {
+		}
+		else if (request.location().contains("New York")) {
 			if (Unit.F.equals(unit)) {
 				temp = 31;
-			} else {
+			}
+			else {
 				temp = -1;
 			}
 		}
@@ -48,11 +50,12 @@ public class WeatherService implements Function<WeatherService.Request, WeatherS
 	}
 
 	@JsonInclude(Include.NON_NULL)
-	public record Request(
-			@JsonProperty(required = true, value = "location") @JsonPropertyDescription("Location: Provide the location (city, country) to retrieve temperature data for the desired area.") String location,
+	public record Request(@JsonProperty(required = true,
+			value = "location") @JsonPropertyDescription("Location: Provide the location (city, country) to retrieve temperature data for the desired area.") String location,
 			@JsonProperty(required = true, value = "lat") @JsonPropertyDescription("City latitude") double lat,
 			@JsonProperty(required = true, value = "lon") @JsonPropertyDescription("City longitude") double lon,
-			@JsonProperty(required = true, value = "unit") @JsonPropertyDescription("Unit of temperature: Specify the unit of temperature to be used in the API request. Use 'F' for Fahrenheit in countries using the imperial system (e.g., United States), and 'C' for Celsius in countries using the metric system (e.g., most of Europe, Asia, etc.).") Unit unit) {
+			@JsonProperty(required = true,
+					value = "unit") @JsonPropertyDescription("Unit of temperature: Specify the unit of temperature to be used in the API request. Use 'F' for Fahrenheit in countries using the imperial system (e.g., United States), and 'C' for Celsius in countries using the metric system (e.g., most of Europe, Asia, etc.).") Unit unit) {
 	}
 
 	public record Response(double temp, Unit unit) {

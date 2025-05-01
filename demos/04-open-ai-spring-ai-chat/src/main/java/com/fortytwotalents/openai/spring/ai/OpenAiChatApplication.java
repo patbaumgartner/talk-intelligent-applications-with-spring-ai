@@ -24,17 +24,17 @@ public class OpenAiChatApplication {
 	CommandLineRunner commandLineRunner(ChatClient chatClient) {
 		return args -> {
 
-			Joke joke = chatClient.prompt()
-				.system("You are a friendly chatbot and you like to place emojis everywhere.")
-				.user("Tell me a friendly developer joke about JAVA.")
+			PromptResponsePair pair = chatClient.prompt()
+				.system("You're an experienced software engineer who gives practical advice to Java developers.")
+				.user("Share a helpful but lesser-known tip for writing better Java code.")
 				.call()
-				.entity(Joke.class);
+				.entity(PromptResponsePair.class);
 
-			log.info("Joke - Prompt: {} - Punchline: {}", joke.prompt(), joke.punchline());
+			log.info("PromptResponsePair - Prompt: {} - Response: {}", pair.prompt(), pair.response());
 		};
 	}
 
-	record Joke(String prompt, String punchline) {
+	record PromptResponsePair(String prompt, String response) {
 	}
 
 }
