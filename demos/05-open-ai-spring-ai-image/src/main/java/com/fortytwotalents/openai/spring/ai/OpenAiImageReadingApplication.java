@@ -25,11 +25,11 @@ public class OpenAiImageReadingApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(ChatClient chatClient,
-			@Value("classpath:mainz-weather.png") Resource imageResourceWeather) {
+			@Value("classpath:st.gallen-weather.png") Resource imageResourceWeather) {
 		return args -> {
 
 			String answer = chatClient.prompt()
-				.user(userSpec -> userSpec.text("What will be the weather like on Thuesday?")
+				.user(userSpec -> userSpec.text("What will be the weather like on Tuesday?")
 					.media(MimeTypeUtils.IMAGE_PNG, imageResourceWeather))
 				.call()
 				.content();

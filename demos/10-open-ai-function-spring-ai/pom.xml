@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
-        <relativePath/>
+        <version>3.5.0</version>
+        <relativePath />
         <!-- lookup parent from repository -->
     </parent>
 
@@ -18,8 +18,8 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0-M8</spring-ai.version>
-        <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
+        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-javaformat-maven-plugin.version>0.0.45</spring-javaformat-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -50,17 +50,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
