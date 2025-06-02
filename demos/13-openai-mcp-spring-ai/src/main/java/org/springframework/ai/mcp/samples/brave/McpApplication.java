@@ -27,7 +27,7 @@ public class McpApplication {
 
 			var chatClient = chatClientBuilder.defaultSystem(
 					"You are useful assistant and can perform web searches Brave's search API to reply to your questions.")
-				.defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClients))
+				.defaultToolCallbacks(new SyncMcpToolCallbackProvider(mcpSyncClients))
 				.build();
 
 			String question = "Does Spring AI supports the Model Context Protocol? Please provide some references.";

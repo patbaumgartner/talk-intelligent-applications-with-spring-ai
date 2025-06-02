@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.5.0</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
@@ -18,8 +18,8 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0-M8</spring-ai.version>
-        <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
+        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-javaformat-maven-plugin.version>0.0.45</spring-javaformat-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +40,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -50,17 +57,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
