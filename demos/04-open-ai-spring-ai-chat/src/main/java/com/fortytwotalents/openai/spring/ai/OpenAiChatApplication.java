@@ -30,7 +30,9 @@ public class OpenAiChatApplication {
 				.call()
 				.entity(PromptResponsePair.class);
 
-			log.info("PromptResponsePair - Prompt: {} - Response: {}", pair.prompt(), pair.response());
+			if (log.isInfoEnabled()) {
+				log.info("PromptResponsePair - Prompt: {} - Response: {}", pair.prompt(), pair.response());
+			}
 		};
 	}
 

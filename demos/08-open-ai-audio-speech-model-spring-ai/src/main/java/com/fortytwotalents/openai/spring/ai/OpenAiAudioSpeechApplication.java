@@ -2,7 +2,6 @@ package com.fortytwotalents.openai.spring.ai;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.openai.OpenAiAudioSpeechOptions;
 import org.springframework.ai.openai.api.OpenAiAudioApi;
 import org.springframework.ai.openai.audio.speech.SpeechModel;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.Charset;
 
-@Slf4j
 @SpringBootApplication
 public class OpenAiAudioSpeechApplication {
 
@@ -26,7 +24,6 @@ public class OpenAiAudioSpeechApplication {
 
 }
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 class OpenAiAudioSpeechController {

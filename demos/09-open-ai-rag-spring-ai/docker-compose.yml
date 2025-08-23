@@ -1,0 +1,31 @@
+services:
+  pgvector:
+    image: 'pgvector/pgvector:pg16'
+    container_name: pgvector
+    environment:
+      - 'POSTGRES_DB=mydatabase'
+      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_PASSWORD=secret'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    labels:
+      - "org.springframework.boot.service-connection=postgres"
+    ports:
+      - '5432:5432'
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: pgweb
+    environment:
+      PGWEB_DATABASE_URL: "postgres://myuser:secret@pgvector:5432/mydatabase?sslmode=disable"
+    depends_on:
+      pgvector:
+        condition: service_healthy
+    labels:
+      - "org.springframework.boot.ignore=true"
+    ports:
+      - '8081:8081'

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.nio.charset.Charset;
 
-@Slf4j
 @SpringBootApplication
 public class OpenAiImageGeneratingApplication {
 
