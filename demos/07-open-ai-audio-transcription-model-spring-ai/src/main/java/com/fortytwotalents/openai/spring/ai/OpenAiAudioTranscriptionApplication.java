@@ -2,7 +2,6 @@ package com.fortytwotalents.openai.spring.ai;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
 import org.springframework.ai.openai.OpenAiAudioTranscriptionModel;
 import org.springframework.ai.openai.OpenAiAudioTranscriptionOptions;
@@ -14,7 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @SpringBootApplication
 public class OpenAiAudioTranscriptionApplication {
 
@@ -24,7 +22,6 @@ public class OpenAiAudioTranscriptionApplication {
 
 }
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 class OpenAiAudioTranscriptionController {

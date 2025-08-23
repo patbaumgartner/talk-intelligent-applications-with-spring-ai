@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-PROMPT="Share a helpful but lesser-known tip for writing better Java code."
+echo "Calling Anthropic Claude API ..."
 
-PROMPT="Tell me a developer joke about Python."
+PROMPT="Share a helpful but lesser-known tip for writing better Java code."
 
 curl https://api.anthropic.com/v1/messages \
     --header "x-api-key: $ANTHROPIC_API_KEY" \
@@ -10,7 +10,7 @@ curl https://api.anthropic.com/v1/messages \
     --header "content-type: application/json" \
     --data \
 "{
-    \"model\": \"claude-3-opus-20240229\",
+    \"model\": \"claude-opus-4-1-20250805\",
     \"max_tokens\": 1024,
     \"messages\": [
         {\"role\": \"user\", \"content\": \"$PROMPT\"}
